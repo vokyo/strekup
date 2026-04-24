@@ -1,0 +1,31 @@
+# ADR 0001: Tech Stack Selection
+
+- Status: Accepted
+- Context: StreakUp is a solo-built, 6-week MVP whose primary consumer is a recruiter scanning a live demo and the source tree for ~30 seconds. The stack must (a) demonstrate production-grade depth on the JD's required technologies, (b) fit the AWS free tier plus a ~$1 USD/month domain, and (c) be single-developer deliverable without a distributed team's ceremony.
+- Decision:
+  - **Backend**: Java 21 + Spring Boot 3.4, Spring Data JPA + Hibernate, Spring Security with JWT, Flyway for schema migrations, JUnit 5 + Mockito + Testcontainers for tests, SpringDoc OpenAPI 3.
+  - **Database**: MySQL 8 (RDS in prod, Docker in dev).
+  - **Cache / ephemeral state**: Redis 7 (Docker sidecar in MVP; ElastiCache post-MVP) for streak counters, heatmap cache, leaderboard `ZSET`, rate-limit counters, and ShedLock coordination.
+  - **Frontend**: React 18 + TypeScript + Vite, Zustand for client state, TanStack Query v5 for server state, React Router v6, Tailwind CSS, Recharts, React Hook Form + Zod, Vitest + React Testing Library.
+  - **Infra**: Docker + docker-compose locally, GitHub Actions CI/CD, AWS ap-southeast-2 (EC2 t3.micro + RDS db.t3.micro + S3 + SES), Vercel for the SPA.
+- Consequences:
+  - Matches the most common JD stack in the target market (Auckland / NZ junior-to-mid roles), so every file in the repo doubles as interview evidence.
+  - Single deployable JAR + single EC2 instance keeps the operational surface small enough for one developer. ShedLock is paid up front so scheduled jobs work identically on a future multi-instance deployment.
+  - MySQL over PostgreSQL: the product's data model has no JSONB, GIS, or advanced indexing needs, and MySQL is more common in the target job market. The cost is giving up `INSERT ... RETURNING` and richer array types, neither of which this app needs.
+  - JWT over server-side sessions: demonstrates auth depth (rotation, hash storage, theft detection) and removes the need for sticky sessions when the API eventually scales horizontally. The cost is more code on the refresh path — accepted as a feature, not a burden (see ADR 0002, 0007).
+  - Zustand + TanStack Query split over Redux: avoids conflating client and server state, which is the most common reason React codebases rot. Redux would add boilerplate without solving a real problem for this app's data shape.
+  - Vercel for the SPA + EC2 for the API (split-origin) is deliberate. It exercises real cross-origin refresh-cookie handling, which a single-origin setup would hide — and that complexity is demonstrable interview material (see `auth-flow.md`, `api-spec.md` CORS section).
+- Alternatives considered:
+  - **Django + Vue**: also viable, but lower match rate with Auckland JDs and doesn't showcase the Java/Spring skills the target roles explicitly ask for.
+  - **Node + NestJS**: overlaps too heavily with the frontend skill set; splits the narrative instead of reinforcing it.
+  - **PostgreSQL**: ruled out above.
+  - **Next.js SSR**: unnecessary — the app is behind a login wall, so SEO and first-render speed are non-goals. Static SPA on Vercel is simpler and demonstrates the same frontend depth.
+- Rationale:
+  - The decision is driven by the dual constraint of "fits a solo 6-week budget" AND "reads as interview evidence in 30 seconds". A more exotic stack (Kotlin + Ktor, Rust + Axum) would be more fun but would cost demo-review legibility with recruiters who skim for `Spring Boot` / `React` / `MySQL` keywords.
+  - Every element is chosen to have a *defensible rationale under questioning*, not just a working runtime. Flyway over Liquibase, JPA Specification over Querydsl, Zustand over Redux — each choice is backed by its own later ADR (see 0002, 0006, and the state-separation rule in `coding-standards.md`). ADR 0001 is the umbrella; the per-technology ADRs hold the per-choice depth.
+  - The split-origin deployment (Vercel SPA + EC2 API) is the single most cost-asymmetric choice in the list: it adds ~1 day of CORS + refresh-cookie work but yields the most interesting interview material (host-only cookies, cross-origin credentialed fetch, preflight caching). A same-origin deployment behind one Caddy instance would have been simpler and strictly worse for the demo narrative.
+- Implementation notes:
+  - Spring Boot version is pinned in `pom.xml` `<parent>` — never introduce a `<dependencyManagement>` override of Boot-managed libs unless a CVE forces it.
+  - MySQL and Redis versions match the Testcontainers pins in [../spring-boot-config.md](../spring-boot-config.md) (§Testcontainers version pin). A bump in one must bump the other in the same PR.
+  - The frontend package set is frozen at the versions listed in [HabitTracker.md](../HabitTracker.md) Day 18; security patches are OK to bump, major versions require a new ADR.
+  - When a new technology is introduced (e.g., a search index, a message queue), add a new ADR referencing this one — don't retrofit 0001.

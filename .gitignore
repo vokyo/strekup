@@ -1,0 +1,92 @@
+# ---------- Secrets & env ----------
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.pem
+*.key
+*.p12
+*.keystore
+
+# ---------- Java / Spring Boot ----------
+target/
+build/
+out/
+*.jar
+*.war
+*.class
+hs_err_pid*
+replay_pid*
+
+# Maven
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# Gradle
+.gradle/
+gradle-app.setting
+!gradle-wrapper.jar
+!gradle-wrapper.properties
+
+# ---------- Node / React / Vite ----------
+node_modules/
+dist/
+dist-ssr/
+.vite/
+coverage/
+*.local
+.eslintcache
+.stylelintcache
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ---------- Testing / coverage ----------
+.jacoco/
+jacoco.exec
+**/coverage/
+test-results/
+playwright-report/
+
+# ---------- Docker ----------
+docker-compose.override.yml
+
+# ---------- AWS / Terraform (if added later) ----------
+.terraform/
+*.tfstate
+*.tfstate.*
+.terraform.lock.hcl
+
+# ---------- IDE / Editor ----------
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+!.vscode/settings.json.example
+!.vscode/extensions.json
+*.swp
+*.swo
+.project
+.classpath
+.settings/
+.factorypath
+.apt_generated/
+
+# ---------- OS ----------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# ---------- Logs / temp ----------
+*.log
+logs/
+tmp/
+temp/

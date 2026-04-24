@@ -1,0 +1,21 @@
+# ADR 0006: JPA Specification for Check-In Search
+
+- Status: Accepted
+- Context: `GET /check-ins` supports combinable filters — `habitId`, `from`, `to`, `tagId`, `hasAttachment`, plus pagination and sorting. With 5 optional filters there are 2^5 = 32 combinations. Encoding them as bespoke repository methods (`findByUserAndHabit`, `findByUserAndHabitAndFromAndTo`, …) produces a combinatorial explosion that's both painful to write and painful to extend when a sixth filter lands.
+- Decision: Implement the query layer with composable JPA `Specification<CheckIn>` predicates. Each filter is a named method on `CheckInSpecifications` that returns a `Specification` or `null` (to skip). The service composes with `Specification.where(...).and(...)` and passes the composite to `CheckInRepository.findAll(spec, pageable)`.
+- Consequences:
+  - Adding a filter is one new `Specification` method + one line at the composition site. No new repository method, no new DTO-to-query mapping.
+  - Filters are type-safe (they operate on the JPA metamodel) and unit-testable in isolation.
+  - Pagination and sorting flow through Spring Data's `Pageable` — no custom plumbing.
+  - The tradeoff: Specifications are a one-time learning curve. Once understood, they're the idiomatic Spring Data solution; newcomers to the codebase can point at the pattern and recognise it.
+- Rationale:
+  - **Why not QueryDSL?** QueryDSL is strictly more powerful (true DSL, better joins) but requires an annotation-processing step and generated Q-classes. For 5 filters on one aggregate root, Specification is sufficient and has zero extra build complexity.
+  - **Why not native SQL with dynamic `WHERE` building?** String concatenation on SQL is a path to SQL injection and bugs. The entire point of JPA is to avoid that — using `Specification` keeps us inside the type-safe, criteria-API world.
+  - **Why not Spring Data derived query methods?** They cap out around 3 filters before the method names become unreadable (`findByUserAndHabitIdAndCheckInDateBetweenAndTagsIdOrderByCheckInDateDesc`). At 5 filters they're unusable.
+  - **Why not a custom JPQL query per combination?** Same combinatorial explosion, just moved from method names into `@Query` annotations.
+- Implementation notes:
+  - Package: `com.streakup.checkin.CheckInSpecifications` (static factory methods).
+  - Each filter returns `null` when the query param is absent — the `Specification.and` chain skips `null` predicates automatically, keeping the composition site terse.
+  - `hasAttachment = true` is implemented as an `EXISTS` subquery against `attachments`, not a join, to avoid row multiplication in the result set.
+  - `tagId` filter uses `EXISTS` against `check_in_tags` for the same reason.
+  - Tests live in `CheckInSpecificationsTest` and use `@DataJpaTest` with a Testcontainers-backed MySQL so the SQL is exercised against the real dialect.

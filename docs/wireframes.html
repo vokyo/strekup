@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StreakUp — Wireframes</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0e0e10;
+    --surface: #18181b;
+    --surface2: #222225;
+    --border: #2e2e32;
+    --text: #e4e4e7;
+    --text-muted: #71717a;
+    --accent: #22c55e;
+    --accent-dim: #166534;
+    --blue: #3b82f6;
+    --orange: #f97316;
+    --red: #ef4444;
+    --purple: #a855f7;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* Header */
+  .doc-header {
+    text-align: center;
+    padding: 60px 20px 40px;
+    border-bottom: 1px solid var(--border);
+  }
+  .doc-header h1 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin-bottom: 8px;
+  }
+  .doc-header h1 span { color: var(--accent); }
+  .doc-header p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+  }
+
+  /* Nav */
+  .screen-nav {
+    display: flex;
+    gap: 6px;
+    padding: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    z-index: 100;
+    border-bottom: 1px solid var(--border);
+  }
+  .screen-nav button {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+  .screen-nav button:hover { border-color: var(--accent); color: var(--text); }
+  .screen-nav button.active {
+    background: var(--accent-dim);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* Screens container */
+  .screens { max-width: 900px; margin: 0 auto; padding: 40px 20px 80px; }
+  .screen-section {
+    display: none;
+    animation: fadeIn 0.3s ease;
+  }
+  .screen-section.active { display: block; }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  .screen-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .screen-route {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+  .screen-desc {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-bottom: 24px;
+    line-height: 1.5;
+  }
+
+  /* Wireframe frame */
+  .wireframe {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 32px;
+  }
+  .wf-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    font-family: 'DM Mono', monospace;
+    gap: 8px;
+  }
+  .wf-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); }
+  .wf-url {
+    background: var(--bg);
+    padding: 4px 14px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+  }
+
+  .wf-body { padding: 24px; }
+
+  /* Wireframe elements */
+  .wf-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 24px;
+  }
+  .wf-logo {
+    font-weight: 700;
+    font-size: 1.1rem;
+  }
+  .wf-logo span { color: var(--accent); }
+  .wf-nav-links {
+    display: flex;
+    gap: 16px;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+  }
+  .wf-nav-links .active-link { color: var(--text); font-weight: 600; }
+
+  .wf-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    border: 1px solid transparent;
+  }
+  .wf-btn-primary { background: var(--accent); color: #000; }
+  .wf-btn-secondary { background: var(--surface2); color: var(--text); border-color: var(--border); }
+  .wf-btn-ghost { background: transparent; color: var(--text-muted); border-color: var(--border); }
+
+  .wf-input {
+    width: 100%;
+    padding: 10px 14px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    font-family: inherit;
+    margin-bottom: 12px;
+  }
+  .wf-label {
+    font-size: 0.78rem;
+    font-weight: 500;
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  .wf-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+
+  .wf-placeholder {
+    background: var(--surface2);
+    border: 2px dashed var(--border);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    font-size: 0.82rem;
+    min-height: 60px;
+    padding: 12px;
+  }
+
+  .wf-grid { display: grid; gap: 12px; }
+  .wf-grid-2 { grid-template-columns: 1fr 1fr; }
+  .wf-grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+  .wf-stat-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+  }
+  .wf-stat-num {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+  .wf-stat-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* Heatmap wireframe */
+  .wf-heatmap {
+    display: flex;
+    gap: 3px;
+    flex-wrap: wrap;
+    padding: 16px;
+  }
+  .wf-heatmap-cell {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+    background: var(--surface2);
+  }
+  .wf-heatmap-cell.l1 { background: #0e4429; }
+  .wf-heatmap-cell.l2 { background: #006d32; }
+  .wf-heatmap-cell.l3 { background: #26a641; }
+  .wf-heatmap-cell.l4 { background: #39d353; }
+
+  /* Leaderboard */
+  .wf-lb-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .wf-lb-rank {
+    font-weight: 700;
+    font-size: 1rem;
+    width: 28px;
+    text-align: center;
+    color: var(--text-muted);
+  }
+  .wf-lb-rank.gold { color: #fbbf24; }
+  .wf-lb-rank.silver { color: #94a3b8; }
+  .wf-lb-rank.bronze { color: #d97706; }
+  .wf-lb-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+  }
+  .wf-lb-name { flex: 1; font-weight: 500; font-size: 0.9rem; }
+  .wf-lb-score {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--accent);
+  }
+
+  /* Auth form centering */
+  .wf-auth-container {
+    max-width: 380px;
+    margin: 0 auto;
+    padding: 40px 0;
+  }
+  .wf-auth-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 4px;
+  }
+  .wf-auth-sub {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-align: center;
+    margin-bottom: 28px;
+  }
+
+  /* Habit card in dashboard */
+  .wf-habit-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 10px;
+  }
+  .wf-habit-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .wf-habit-info { flex: 1; }
+  .wf-habit-name { font-weight: 600; font-size: 0.92rem; }
+  .wf-habit-meta { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
+  .wf-habit-streak {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.82rem;
+    color: var(--orange);
+    font-weight: 500;
+    margin-right: 10px;
+    white-space: nowrap;
+  }
+  .wf-check-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+  .wf-check-btn.done {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #000;
+  }
+
+  /* Chart placeholder */
+  .wf-chart {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  .wf-chart-title {
+    font-weight: 600;
+    font-size: 0.88rem;
+    margin-bottom: 14px;
+  }
+  .wf-chart-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+    height: 100px;
+  }
+  .wf-bar {
+    flex: 1;
+    background: var(--accent-dim);
+    border-radius: 4px 4px 0 0;
+    position: relative;
+  }
+
+  /* Drawer */
+  .wf-drawer {
+    position: relative;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 20px;
+  }
+  .wf-drawer-handle {
+    width: 40px;
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    margin: 0 auto 16px;
+  }
+
+  /* Annotations */
+  .annotations {
+    margin-top: 20px;
+    padding: 16px;
+    background: var(--surface2);
+    border-radius: 10px;
+    border-left: 3px solid var(--accent);
+  }
+  .annotations h4 {
+    font-size: 0.82rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--accent);
+  }
+  .annotations li {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+    margin-left: 16px;
+    line-height: 1.5;
+  }
+
+  .section-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 32px 0;
+  }
+</style>
+</head>
+<body>
+
+<div class="doc-header">
+  <h1>Streak<span>Up</span> — Wireframes</h1>
+  <p>9 key screens · Phase 0, Day 1 · Click tabs to navigate</p>
+</div>
+
+<div class="screen-nav" id="nav">
+  <button class="active" data-screen="login">Login</button>
+  <button data-screen="register">Register</button>
+  <button data-screen="dashboard">Dashboard</button>
+  <button data-screen="empty">Empty State</button>
+  <button data-screen="newhabit">New Habit</button>
+  <button data-screen="detail">Habit Detail</button>
+  <button data-screen="stats">Stats</button>
+  <button data-screen="leaderboard">Leaderboard</button>
+  <button data-screen="settings">Settings</button>
+</div>
+
+<div class="screens">
+
+  <!-- ==================== LOGIN ==================== -->
+  <div class="screen-section active" id="screen-login">
+    <div class="screen-title">Login Page</div>
+    <div class="screen-route">/login</div>
+    <div class="screen-desc">Returning users authenticate with email + password. "Remember me" is implicit via refresh token (7-day expiry stored in HttpOnly cookie).</div>
+
+    <div class="wireframe">
+      <div class="wf-topbar">
+        <div class="wf-dot"></div><div class="wf-dot"></div><div class="wf-dot"></div>
+        <div class="wf-url">app.streakup.dev/login</div>
+      </div>
+      <div class="wf-body">
+        <div class="wf-auth-container">
+          <div style="text-align:center; margin-bottom:24px; font-size:1.5rem; font-weight:700;">Streak<span style="color:var(--accent)">Up</span></div>
+          <div class="wf-auth-title">Welcome back</div>
+          <div class="wf-auth-sub">Log in to continue your streaks</div>
+
+          <div class="wf-label">Email</div>
+          <div class="wf-input">you@example.com</div>
+          <div class="wf-label">Password</div>
+          <div class="wf-input" style="letter-spacing:3px;">••••••••</div>
+
+          <div style="text-align:right; margin-bottom:20px;">
+            <span style="font-size:0.78rem; color:var(--blue); cursor:pointer;">Forgot password?</span>
+          </div>
+
+          <div class="wf-btn wf-btn-primary" style="width:100%; justify-content:center; padding:12px;">Log In</div>
+
+          <div style="text-align:center; margin-top:20px; font-size:0.82rem; color:var(--text-muted);">
+            Don't have an account? <span style="color:var(--accent); font-weight:600;">Sign up</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="annotations">
+      <h4>Design Notes</h4>
+      <ul>
+        <li>Minimal form — email + password only (no OAuth for MVP)</li>
+        <li>Backend returns field-level validation errors displayed inline below each input</li>
+        <li>On success: store access token in memory (Zustand), refresh token set via HttpOnly cookie by backend</li>
+        <li>"Forgot password?" is out of MVP scope — link present but shows "coming soon" toast</li>
+        <li>If already logged in (valid refresh token), auto-redirect to /dashboard</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ==================== REGISTER ==================== -->
+  <div class="screen-section" id="screen-register">
+    <div class="screen-title">Registration Page</div>
+    <div class="screen-route">/register</div>
+    <div class="screen-desc">New users create an account. Client-side validation (Zod) provides instant feedback; server-side validation catches duplicates and enforces password policy.</div>
+
+    <div class="wireframe">
+      <div class="wf-topbar">
+        <div class="wf-dot"></div><div class="wf-dot"></div><div class="wf-dot"></div>
+        <div class="wf-url">app.streakup.dev/register</div>
+      </div>
+      <div class="wf-body">
+        <div class="wf-auth-container">
+          <div style="text-align:center; margin-bottom:24px; font-size:1.5rem; font-weight:700;">Streak<span style="color:var(--accent)">Up</span></div>
+          <div class="wf-auth-title">Create your account</div>
+          <div class="wf-auth-sub">Start building better habits today</div>
+
+          <div class="wf-label">Display Name</div>
+          <div class="wf-input">Jane Doe</div>
+          <div class="wf-label">Email</div>
+          <div class="wf-input">jane@example.com</div>
+          <div class="wf-label">Password</div>
+          <div class="wf-input" style="letter-spacing:3px;">••••••••</div>
+          <div style="font-size:0.72rem; color:var(--text-muted); margin-bottom:12px;">Min 8 characters, including uppercase, lowercase, and a number</div>
+          <div class="wf-label">Confirm Password</div>
+          <div class="wf-input" style="letter-spacing:3px;">••••••••</div>
+
+          <div class="wf-label">Timezone</div>
+          <div class="wf-input" style="color:var(--text);">Pacific/Auckland (auto-detected)</div>
+
+          <div style="margin-top:8px;">
+            <div class="wf-btn wf-btn-primary" style="width:100%; justify-content:center; padding:12px;">Create Account</div>
+          </div>
+
+          <div style="text-align:center; margin-top:20px; font-size:0.82rem; color:var(--text-muted);">
+            Already have an account? <span style="color:var(--accent); font-weight:600;">Log in</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="annotations">
+      <h4>Design Notes</h4>
+      <ul>
+        <li>Timezone auto-detected via <code>Intl.DateTimeFormat().resolvedOptions().timeZone</code></li>
+        <li>Real-time client validation: Zod schema checks password strength, email format, password match</li>
+        <li>Server errors (e.g. "Email already registered") mapped to specific fields via ApiErrorResponse.details</li>
+        <li>On success: auto-login (issue tokens) and redirect to /dashboard — no extra login step</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ==================== DASHBOARD ==================== -->
+  <div class="screen-section" id="screen-dashboard">
+    <div class="screen-title">Dashboard (Home Page)</div>
+    <div class="screen-route">/dashboard</div>
+    <div class="screen-desc">The primary view after login. Shows today's habits with one-tap check-in, stat cards for quick motivation, and a mini heatmap preview.</div>
+
+    <div class="wireframe">
+      <div class="wf-topbar">
+        <div class="wf-dot"></div><div class="wf-dot"></div><div class="wf-dot"></div>
+        <div class="wf-url">app.streakup.dev/dashboard</div>
+      </div>
+      <div class="wf-body">
+        <!-- Nav -->
+        <div class="wf-nav">
+          <div class="wf-logo">Streak<span>Up</span></div>
+          <div class="wf-nav-links">
+            <span class="active-link">Dashboard</span>
+            <span>Stats</span>
+            <span>Leaderboard</span>
+            <span>Settings</span>
+            <span style="color:var(--text);">JD</span>
+          </div>
+        </div>
+
+        <!-- Stats row -->
+        <div class="wf-grid wf-grid-3" style="margin-bottom:24px;">
+          <div class="wf-stat-card">
+            <div class="wf-stat-num" style="color:var(--accent);">3/5</div>
+            <div class="wf-stat-label">Done Today</div>
+          </div>
+          <div class="wf-stat-card">
+            <div class="wf-stat-num" style="color:var(--orange);">23</div>
+            <div class="wf-stat-label">Best Streak</div>
+          </div>
+          <div class="wf-stat-card">
+            <div class="wf-stat-num" style="color:var(--blue);">87%</div>
+            <div class="wf-stat-label">This Month</div>
+          </div>
+        </div>
+
+        <!-- Section header -->
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+          <div style="font-weight:600; font-size:0.95rem;">Today's Habits</div>
+          <div class="wf-btn wf-btn-primary" style="padding:6px 14px; font-size:0.78rem;">+ New Habit</div>
+        </div>
+
+        <!-- Habit cards -->
+        <div class="wf-habit-card">
+          <div class="wf-habit-dot" style="background:var(--accent);"></div>
+          <div class="wf-habit-info">
+            <div class="wf-habit-name">Read 30 Minutes</div>
+            <div class="wf-habit-meta">Daily · Last: today</div>
+          </div>
+          <div class="wf-habit-streak">12d</div>
+          <div class="wf-check-btn done">✓</div>
+        </div>
+
+        <div class="wf-habit-card">
+          <div class="wf-habit-dot" style="background:var(--blue);"></div>
+          <div class="wf-habit-info">
+            <div class="wf-habit-name">Exercise</div>
+            <div class="wf-habit-meta">Weekdays · Last: today</div>
+          </div>
+          <div class="wf-habit-streak">5d</div>
+          <div class="wf-check-btn done">✓</div>
+        </div>
+
+        <div class="wf-habit-card">
+          <div class="wf-habit-dot" style="background:var(--purple);"></div>
+          <div class="wf-habit-info">
+            <div class="wf-habit-name">Meditate</div>
+            <div class="wf-habit-meta">Daily · Last: yesterday</div>
+          </div>
+          <div class="wf-habit-streak">0d</div>
+          <div class="wf-check-btn">✓</div>
+        </div>
+
+        <div class="wf-habit-card">
+          <div class="wf-habit-dot" style="background:var(--orange);"></div>
+          <div class="wf-habit-info">
+            <div class="wf-habit-name">Learn Japanese</div>
+            <div class="wf-habit-meta">Daily · Last: 2 days ago</div>
+          </div>
+          <div class="wf-habit-streak">0d</div>
+          <div class="wf-check-btn">✓</div>
+        </div>
+
+        <div class="wf-habit-card">
+          <div class="wf-habit-dot" style="background:var(--red);"></div>
+          <div class="wf-habit-info">
+            <div class="wf-habit-name">No Social Media</div>
+            <div class="wf-habit-meta">Daily · Last: today</div>
+          </div>
+          <div class="wf-habit-streak">3d</div>
+          <div class="wf-check-btn done">✓</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="annotations">
+      <h4>Design Notes</h4>
+      <ul>
+        <li>Stat cards update in real-time via TanStack Query invalidation on check-in</li>
+        <li>Habit cards are clickable — tap name to go to detail view, tap circle to check in</li>
+        <li>Check-in uses optimistic update: circle fills immediately, rolls back on 409 or network error</li>
+        <li>Streak counter ("12d") shows current consecutive days; turns grey at 0</li>
+        <li>Colour dots are user-configurable per habit (stored in habit.colour field)</li>
+        <li>Empty state: illustration + "Create your first habit" CTA when no habits exist</li>
+        <li>Three states handled: Loading (skeleton cards), Error (retry banner), Empty (onboarding prompt)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ==================== DASHBOARD EMPTY STATE ==================== -->
+  <div class="screen-section" id="screen-empty">
+    <div class="screen-title">Dashboard — Empty State</div>
+    <div class="screen-route">/dashboard (first-time user)</div>
+    <div class="screen-desc">What a brand-new user sees after registration. No habits exist yet — the page guides them to create their first one. This is the first impression of the product.</div>
+
+    <div class="wireframe">
+      <div class="wf-topbar">
+        <div class="wf-dot"></div><div class="wf-dot"></div><div class="wf-dot"></div>
+        <div class="wf-url">app.streakup.dev/dashboard</div>
+      </div>
+      <div class="wf-body">
+        <div class="wf-nav">
+          <div class="wf-logo">Streak<span>Up</span></div>
+          <div class="wf-nav-links">
+            <span class="active-link">Dashboard</span>
+            <span style="opacity:0.4;">Stats</span>
+            <span style="opacity:0.4;">Leaderboard</span>
+            <span>Settings</span>
+            <span style="color:var(--text);">JD</span>
+          </div>
+        </div>
+
+        <!-- Empty stat cards -->
+        <div class="wf-grid wf-grid-3" style="margin-bottom:24px;">
+          <div class="wf-stat-card">
+            <div class="wf-stat-num" style="color:var(--text-muted);">0/0</div>
+            <div class="wf-stat-label">Done Today</div>
+          </div>
+          <div class="wf-stat-card">
+            <div class="wf-stat-num" style="color:var(--text-muted);">—</div>
+            <div class="wf-stat-label">Best Streak</div>
+          </div>
+          <div class="wf-stat-card">
+            <div class="wf-stat-num" style="color:var(--text-muted);">—</div>
+            <div class="wf-stat-label">This Month</div>
+          </div>
+        </div>
+
+        <!-- Empty state illustration area -->
+        <div style="text-align:center; padding:48px 20px; border:2px dashed var(--border); border-radius:16px; margin-bottom:16px;">
+          <div style="font-size:3rem; margin-bottom:16px;">🌱</div>
+          <div style="font-size:1.1rem; font-weight:700; margin-bottom:6px;">Start your first streak</div>
+          <div style="font-size:0.85rem; color:var(--text-muted); max-width:320px; margin:0 auto 24px; line-height:1.5;">Create a habit you want to build. Track it daily. Watch your consistency grow on the heatmap.</div>
+          <div class="wf-btn wf-btn-primary" style="padding:12px 28px; font-size:0.9rem;">+ Create Your First Habit</div>
+        </div>
+
+        <!-- Subtle social proof -->
+        <div style="text-align:center; font-size:0.78rem; color:var(--text-muted);">
+          💡 Tip: Start with just one habit. Users who focus on a single habit are 3× more likely to build a lasting streak.
+        </div>
+      </div>
+    </div>
+
+    <div class="annotations">
+      <h4>Design Notes</h4>
+      <ul>
+        <li>Stats and Leaderboard nav links are visually dimmed (opacity 0.4) until the user has at least one habit — not disabled, just de-emphasised</li>
+        <li>The CTA button links to /habits/new</li>
+        <li>After the first habit is created, this empty state is never shown again (replaced by the normal dashboard)</li>
+        <li>The "tip" at the bottom rotates through 3–4 motivational messages (client-side, no API call)</li>
+        <li>This same empty-state pattern is reused in /stats and /leaderboard for consistency</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ==================== NEW HABIT FORM ==================== -->
+  <div class="screen-section" id="screen-newhabit">
+    <div class="screen-title">Create / Edit Habit Form</div>
+    <div class="screen-route">/habits/new · /habits/:id/edit</div>
+    <div class="screen-desc">Shared form component for creating and editing habits. Defines the frequency selector, colour picker, and validation behaviour. Edit mode pre-fills existing values.</div>
+
+    <div class="wireframe">
+      <div class="wf-topbar">
+        <div class="wf-dot"></div><div class="wf-dot"></div><div class="wf-dot"></div>
+        <div class="wf-url">app.streakup.dev/habits/new</div>
+      </div>
+      <div class="wf-body">
+        <div class="wf-nav">
+          <div class="wf-logo">Streak<span>Up</span></div>
+          <div class="wf-nav-links">
+            <span>Dashboard</span>
+            <span>Stats</span>
+            <span>Leaderboard</span>
+            <span>Settings</span>
+            <span style="color:var(--text);">JD</span>
+          </div>
+        </div>
+
+        <!-- Breadcrumb -->
+        <div style="font-size:0.78rem; color:var(--text-muted); margin-bottom:20px;">
+          <span style="cursor:pointer;">Dashboard</span> <span style="margin:0 6px;">›</span> <span style="color:var(--text);">New Habit</span>
+        </div>
+
+        <div style="font-size:1.2rem; font-weight:700; margin-bottom:24px;">Create New Habit</div>
+
+        <div class="wf-card" style="padding:24px;">
+          <!-- Name -->
+          <div class="wf-label">Habit Name <span style="color:var(--red);">*</span></div>
+          <div class="wf-input">e.g. Read 30 Minutes</div>
+          <div style="font-size:0.7rem; color:var(--text-muted); margin-top:-8px; margin-bottom:16px;">Max 100 characters</div>
+
+          <!-- Description -->
+          <div class="wf-label">Description (optional)</div>
+          <div class="wf-input" style="height:56px;">What's this habit about?</div>
+
+          <!-- Frequency -->
+          <div class="wf-label" style="margin-bottom:10px;">Frequency <span style="color:var(--red);">*</span></div>
+          <div style="display:flex; gap:8px; margin-bottom:8px;">
+            <div class="wf-btn wf-btn-primary" style="font-size:0.78rem; padding:6px 14px;">Daily</div>
+            <div class="wf-btn wf-btn-ghost" style="font-size:0.78rem; padding:6px 14px;">Weekdays</div>
+            <div class="wf-btn wf-btn-ghost" style="font-size:0.78rem; padding:6px 14px;">Custom</div>
+          </div>
+
+          <!-- Custom days (shown when Custom is selected) -->
+          <div style="background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:12px; margin-bottom:16px;">
+            <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:8px;">Select days (shown when "Custom" is active)</div>
+            <div style="display:flex; gap:6px;">
+              <div style="width:32px; height:32px; border-radius:50%; background:var(--accent); color:#000; display:flex; align-items:center; justify-content:center; font-size:0.72rem; font-weight:600;">M</div>
+              <div style="width:32px; height:32px; border-radius:50%; border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:0.72rem; color:var(--text-muted);">T</div>
+              <div style="width:32px; height:32px; border-radius:50%; background:var(--accent); color:#000; display:flex; align-items:center; justify-content:center; font-size:0.72rem; font-weight:600;">W</div>
+              <div style="width:32px; height:32px; border-radius:50%; border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:0.72rem; color:var(--text-muted);">T</div>
+              <div style="width:32px; height:32px; border-radius:50%; background:var(--accent); color:#000; display:flex; align-items:center; justify-content:center; font-size:0.72rem; font-weight:600;">F</div>
+              <div style="width:32px; height:32px; border-radius:50%; border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:0.72rem; color:var(--text-muted);">S</div>
+              <div style="width:32px; height:32px; border-radius:50%; border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:0.72rem; color:var(--text-muted);">S</div>
+            </div>
+          </div>
+
+          <!-- Colour picker -->
+          <div class="wf-label" style="margin-bottom:10px;">Colour</div>
+          <div style="display:flex; gap:10px; margin-bottom:24px;">
+            <div style="width:28px; height:28px; border-radius:50%; background:var(--accent); border:2px solid var(--text); cursor:pointer;"></div>
+            <div style="width:28px; height:28px; border-radius:50%; background:var(--blue); border:2px solid transparent; cursor:pointer;"></div>
+            <div style="width:28px; height:28px; border-radius:50%; background:var(--purple); border:2px solid transparent; cursor:pointer;"></div>
+            <div style="width:28px; height:28px; border-radius:50%; background:var(--orange); border:2px solid transparent; cursor:pointer;"></div>
+            <div style="width:28px; height:28px; border-radius:50%; background:var(--red); border:2px solid transparent; cursor:pointer;"></div>
+            <div style="width:28px; height:28px; border-radius:50%; background:#06b6d4; border:2px solid transparent; cursor:pointer;"></div>
+            <div style="width:28px; height:28px; border-radius:50%; background:#f472b6; border:2px solid transparent; cursor:pointer;"></div>
+            <div style="width:28px; height:28px; border-radius:50%; background:#a3a3a3; border:2px solid transparent; cursor:pointer;"></div>
+          </div>
+
+          <!-- Action buttons -->
+          <div style="display:flex; gap:12px; justify-content:flex-end;">
+            <div class="wf-btn wf-btn-ghost">Cancel</div>
+            <div class="wf-btn wf-btn-primary">Create Habit</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="annotations">
+      <h4>Design Notes</h4>
+      <ul>
+        <li>Shared component: HabitFormView renders in create mode (/habits/new) or edit mode (/habits/:id/edit)</li>
+        <li>Edit mode: title becomes "Edit Habit", button becomes "Save Changes", fields pre-filled from existing habit</li>
+        <li>Frequency selector: "Daily" / "Weekdays" are toggle buttons; "Custom" reveals the day-of-week picker below</li>
+        <li>Custom days: tap to toggle each day; at least 1 day must be selected; streak logic uses this schedule</li>
+        <li>Colour picker: 8 preset colours (no free-form picker — keeps UI simple, avoids ugly combos)</li>
+        <li>Selected colour gets a white border ring; default is green (first option)</li>
+        <li>Client validation (React Hook Form + Zod): name required + max 100 chars, frequency required, ≥ 1 day if custom</li>
+        <li>Cancel navigates back (history.back()); no unsaved-changes prompt for MVP</li>
+        <li>On success: redirect to /dashboard with a success toast</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ==================== HABIT DETAIL ==================== -->
+  <div class="screen-section" id="screen-detail">
+    <div class="screen-title">Habit Detail Page</div>
+    <div class="screen-route">/habits/:id</div>
+    <div class="screen-desc">Deep dive into a single habit: check-in history, streak stats, per-habit heatmap, and the check-in form drawer.</div>
+
+    <div class="wireframe">
+      <div class="wf-topbar">
+        <div class="wf-dot"></div><div class="wf-dot"></div><div class="wf-dot"></div>
+        <div class="wf-url">app.streakup.dev/habits/h_abc123</div>
+      </div>
+      <div class="wf-body">
+        <div class="wf-nav">
+          <div class="wf-logo">Streak<span>Up</span></div>
+          <div class="wf-nav-links">
+            <span>Dashboard</span>
+            <span>Stats</span>
+            <span>Leaderboard</span>
+            <span>Settings</span>
+            <span style="color:var(--text);">JD</span>
+          </div>
+        </div>
+
+        <!-- Breadcrumb -->
+        <div style="font-size:0.78rem; color:var(--text-muted); margin-bottom:20px;">
+          <span style="cursor:pointer;">Dashboard</span> <span style="margin:0 6px;">›</span> <span style="color:var(--text);">Read 30 Minutes</span>
+        </div>
+
+        <!-- Habit header -->
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:24px;">
+          <div style="width:16px; height:16px; border-radius:50%; background:var(--accent);"></div>
+          <div style="flex:1;">
+            <div style="font-size:1.2rem; font-weight:700;">Read 30 Minutes</div>
+            <div style="font-size:0.82rem; color:var(--text-muted);">Daily · Created Apr 10, 2026</div>
+          </div>
+          <div class="wf-btn wf-btn-secondary" style="font-size:0.78rem;">Edit</div>
+          <div class="wf-btn wf-btn-primary" style="font-size:0.78rem;">+ Check In</div>
+        </div>
+
+        <!-- Streak cards -->
+        <div class="wf-grid wf-grid-3" style="margin-bottom:24px;">
+          <div class="wf-stat-card">
+            <div class="wf-stat-num" style="color:var(--orange);">12</div>
+            <div class="wf-stat-label">Current Streak</div>
+          </div>
+          <div class="wf-stat-card">
+            <div class="wf-stat-num" style="color:var(--accent);">23</div>
+            <div class="wf-stat-label">Longest Streak</div>
+          </div>
+          <div class="wf-stat-card">
+            <div class="wf-stat-num" style="color:var(--blue);">91%</div>
+            <div class="wf-stat-label">Completion Rate</div>
+          </div>
+        </div>
+
+        <!-- Mini heatmap for this habit -->
+        <div class="wf-card">
+          <div style="font-weight:600; font-size:0.88rem; margin-bottom:12px;">Check-in Heatmap</div>
+          <div class="wf-heatmap" id="detail-heatmap"></div>
+        </div>
+
+        <!-- Recent check-ins -->
+        <div style="font-weight:600; font-size:0.88rem; margin-bottom:12px;">Recent Check-ins</div>
+        <div class="wf-card" style="display:flex; align-items:center; gap:12px;">
+          <div style="color:var(--accent); font-size:1rem;">✓</div>
+          <div style="flex:1;">
+            <div style="font-size:0.85rem; font-weight:500;">Today, Apr 22</div>
+            <div style="font-size:0.78rem; color:var(--text-muted);">Finished chapter 14 of Clean Code</div>
+          </div>
+          <div style="font-size:0.72rem; color:var(--text-muted);">2:30 PM</div>
+        </div>
+        <div class="wf-card" style="display:flex; align-items:center; gap:12px;">
+          <div style="color:var(--accent); font-size:1rem;">✓</div>
+          <div style="flex:1;">
+            <div style="font-size:0.85rem; font-weight:500;">Yesterday, Apr 21</div>
+            <div style="font-size:0.78rem; color:var(--text-muted);">Read Spring Security in Action ch. 7</div>
+          </div>
+          <div style="font-size:0.72rem; color:var(--text-muted);">9:15 PM</div>
+        </div>
+        <div class="wf-card" style="display:flex; align-items:center; gap:12px;">
+          <div style="color:var(--accent); font-size:1rem;">✓</div>
+          <div style="flex:1;">
+            <div style="font-size:0.85rem; font-weight:500;">Apr 20</div>
+            <div style="font-size:0.78rem; color:var(--text-muted);font-style:italic;">No notes</div>
+          </div>
+          <div style="font-size:0.72rem; color:var(--text-muted);">11:00 AM</div>
+        </div>
+
+        <!-- Check-in drawer preview -->
+        <div class="wf-drawer">
+          <div class="wf-drawer-handle"></div>
+          <div style="font-weight:600; font-size:0.92rem; margin-bottom:14px;">Quick Check-In</div>
+          <div class="wf-label">Notes (optional)</div>
+          <div class="wf-input" style="height:60px;">What did you accomplish?</div>
+          <div class="wf-label">Attachment (optional)</div>
+          <div class="wf-placeholder" style="margin-bottom:16px;">📎 Drop an image or click to upload (max 5MB)</div>
+          <div class="wf-btn wf-btn-primary" style="width:100%; justify-content:center; padding:10px;">Submit Check-In</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="annotations">
+      <h4>Design Notes</h4>
+      <ul>
+        <li>Check-in drawer slides up from bottom on mobile, appears as side panel on desktop</li>
+        <li>Image upload flow: frontend calls POST /api/v1/attachments/presign → gets S3 presigned URL → PUTs directly to S3 → sends S3 key with check-in payload</li>
+        <li>Check-in history is paginated (TanStack Query infinite scroll); sorted newest-first</li>
+        <li>Edit button navigates to /habits/:id/edit (reuses HabitFormView component)</li>
+        <li>Heatmap shows last 90 days for this specific habit only</li>
+        <li>Delete check-in available via context menu (three dots) — requires confirmation</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ==================== STATS ==================== -->
+  <div class="screen-section" id="screen-stats">
+    <div class="screen-title">Statistics Page</div>
+    <div class="screen-route">/stats</div>
+    <div class="screen-desc">Personal analytics hub: full-year heatmap (GitHub-style), monthly completion chart, and aggregate statistics across all habits.</div>
+
+    <div class="wireframe">
+      <div class="wf-topbar">
+        <div class="wf-dot"></div><div class="wf-dot"></div><div class="wf-dot"></div>
+        <div class="wf-url">app.streakup.dev/stats</div>
+      </div>
+      <div class="wf-body">
+        <div class="wf-nav">
+          <div class="wf-logo">Streak<span>Up</span></div>
+          <div class="wf-nav-links">
+            <span>Dashboard</span>
+            <span class="active-link">Stats</span>
+            <span>Leaderboard</span>
+            <span>Settings</span>
+            <span style="color:var(--text);">JD</span>
+          </div>
+        </div>
+
+        <div style="font-size:1.1rem; font-weight:700; margin-bottom:20px;">Your Stats</div>
+
+        <!-- Stat cards -->
+        <div class="wf-grid" style="grid-template-columns:repeat(4, 1fr); margin-bottom:24px;">
+          <div class="wf-stat-card">
+            <div class="wf-stat-num" style="color:var(--accent);">247</div>
+            <div class="wf-stat-label">Total Check-ins</div>
+          </div>
+          <div class="wf-stat-card">
+            <div class="wf-stat-num" style="color:var(--orange);">23</div>
+            <div class="wf-stat-label">Best Streak</div>
+          </div>
+          <div class="wf-stat-card">
+            <div class="wf-stat-num" style="color:var(--blue);">5</div>
+            <div class="wf-stat-label">Active Habits</div>
+          </div>
+          <div class="wf-stat-card">
+            <div class="wf-stat-num" style="color:var(--purple);">82%</div>
+            <div class="wf-stat-label">Avg Completion</div>
+          </div>
+        </div>
+
+        <!-- Full year heatmap -->
+        <div class="wf-card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <div style="font-weight:600; font-size:0.88rem;">Contribution Heatmap — 2026</div>
+            <div style="display:flex; gap:4px; align-items:center; font-size:0.7rem; color:var(--text-muted);">
+              Less
+              <div style="width:10px;height:10px;background:var(--surface2);border-radius:2px;"></div>
+              <div style="width:10px;height:10px;background:#0e4429;border-radius:2px;"></div>
+              <div style="width:10px;height:10px;background:#006d32;border-radius:2px;"></div>
+              <div style="width:10px;height:10px;background:#26a641;border-radius:2px;"></div>
+              <div style="width:10px;height:10px;background:#39d353;border-radius:2px;"></div>
+              More
+            </div>
+          </div>
+          <div class="wf-heatmap" id="full-heatmap" style="gap:2px;"></div>
+        </div>
+
+        <!-- Monthly completion chart -->
+        <div class="wf-chart">
+          <div class="wf-chart-title">Monthly Completion Rate</div>
+          <div style="display:flex; align-items:flex-end; gap:8px; height:120px; padding-bottom:24px; border-bottom:1px solid var(--border); position:relative;">
+            <div style="position:absolute;bottom:26px;left:0;right:0;height:1px;border-top:1px dashed var(--border);"></div>
+            <div style="position:absolute;bottom:60px;left:0;right:0;height:1px;border-top:1px dashed var(--border);"></div>
+            <div style="position:absolute;bottom:94px;left:0;right:0;height:1px;border-top:1px dashed var(--border);"></div>
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:4px;">
+              <div style="flex:1; width:100%; max-width:32px; background:var(--accent-dim); border-radius:4px 4px 0 0; height:50%;"></div>
+              <span style="font-size:0.65rem; color:var(--text-muted);">Jan</span>
+            </div>
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:4px;">
+              <div style="flex:1; width:100%; max-width:32px; background:var(--accent-dim); border-radius:4px 4px 0 0; height:65%;"></div>
+              <span style="font-size:0.65rem; color:var(--text-muted);">Feb</span>
+            </div>
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:4px;">
+              <div style="flex:1; width:100%; max-width:32px; background:var(--accent-dim); border-radius:4px 4px 0 0; height:80%;"></div>
+              <span style="font-size:0.65rem; color:var(--text-muted);">Mar</span>
+            </div>
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:4px;">
+              <div style="flex:1; width:100%; max-width:32px; background:var(--accent); border-radius:4px 4px 0 0; height:92%;"></div>
+              <span style="font-size:0.65rem; color:var(--text);">Apr</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Per-habit breakdown -->
+        <div style="font-weight:600; font-size:0.88rem; margin-bottom:12px;">Per-Habit Breakdown</div>
+        <div class="wf-card" style="display:flex; align-items:center; gap:12px;">
+          <div style="width:10px; height:10px; border-radius:50%; background:var(--accent);"></div>
+          <div style="flex:1; font-size:0.85rem; font-weight:500;">Read 30 Minutes</div>
+          <div style="font-size:0.82rem; color:var(--text-muted);">91% · 12d streak</div>
+          <div style="width:80px; height:6px; background:var(--surface2); border-radius:3px; overflow:hidden;">
+            <div style="width:91%; height:100%; background:var(--accent); border-radius:3px;"></div>
+          </div>
+        </div>
+        <div class="wf-card" style="display:flex; align-items:center; gap:12px;">
+          <div style="width:10px; height:10px; border-radius:50%; background:var(--blue);"></div>
+          <div style="flex:1; font-size:0.85rem; font-weight:500;">Exercise</div>
+          <div style="font-size:0.82rem; color:var(--text-muted);">85% · 5d streak</div>
+          <div style="width:80px; height:6px; background:var(--surface2); border-radius:3px; overflow:hidden;">
+            <div style="width:85%; height:100%; background:var(--blue); border-radius:3px;"></div>
+          </div>
+        </div>
+        <div class="wf-card" style="display:flex; align-items:center; gap:12px;">
+          <div style="width:10px; height:10px; border-radius:50%; background:var(--purple);"></div>
+          <div style="flex:1; font-size:0.85rem; font-weight:500;">Meditate</div>
+          <div style="font-size:0.82rem; color:var(--text-muted);">67% · 0d streak</div>
+          <div style="width:80px; height:6px; background:var(--surface2); border-radius:3px; overflow:hidden;">
+            <div style="width:67%; height:100%; background:var(--purple); border-radius:3px;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="annotations">
+      <h4>Design Notes</h4>
+      <ul>
+        <li>Heatmap: GET /api/v1/stats/heatmap — returns array of {date, count} objects; cached in Redis (TTL 5 min)</li>
+        <li>Monthly chart: Recharts LineChart or BarChart; data from GET /api/v1/stats/monthly-completion</li>
+        <li>Per-habit breakdown is sorted by completion rate descending</li>
+        <li>Heatmap tooltip on hover shows exact date and count (e.g. "Apr 15: 4 check-ins")</li>
+        <li>Year selector allows viewing previous years once enough data exists</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ==================== LEADERBOARD ==================== -->
+  <div class="screen-section" id="screen-leaderboard">
+    <div class="screen-title">Leaderboard Page</div>
+    <div class="screen-route">/leaderboard</div>
+    <div class="screen-desc">Global ranking by total check-ins. Powered by Redis ZSET for O(log N) updates and O(log N + M) range queries. Shows top 10 + the current user's rank when they have enabled leaderboard visibility.</div>
+
+    <div class="wireframe">
+      <div class="wf-topbar">
+        <div class="wf-dot"></div><div class="wf-dot"></div><div class="wf-dot"></div>
+        <div class="wf-url">app.streakup.dev/leaderboard</div>
+      </div>
+      <div class="wf-body">
+        <div class="wf-nav">
+          <div class="wf-logo">Streak<span>Up</span></div>
+          <div class="wf-nav-links">
+            <span>Dashboard</span>
+            <span>Stats</span>
+            <span class="active-link">Leaderboard</span>
+            <span>Settings</span>
+            <span style="color:var(--text);">JD</span>
+          </div>
+        </div>
+
+        <div style="font-size:1.1rem; font-weight:700; margin-bottom:4px;">Leaderboard</div>
+        <div style="font-size:0.82rem; color:var(--text-muted); margin-bottom:20px;">Ranked by total check-ins across all habits</div>
+
+        <!-- Podium-style top 3 -->
+        <div class="wf-grid wf-grid-3" style="margin-bottom:24px; text-align:center;">
+          <div class="wf-stat-card" style="border-color:#94a3b8;">
+            <div style="font-size:0.72rem; color:#94a3b8; margin-bottom:4px;">2ND</div>
+            <div class="wf-lb-avatar" style="margin:0 auto 8px; width:40px; height:40px;"></div>
+            <div style="font-size:0.85rem; font-weight:600;">Sarah K.</div>
+            <div style="font-family:'DM Mono',monospace; font-size:0.82rem; color:var(--accent);">412 check-ins</div>
+          </div>
+          <div class="wf-stat-card" style="border-color:#fbbf24; transform:scale(1.05);">
+            <div style="font-size:0.72rem; color:#fbbf24; margin-bottom:4px;">1ST</div>
+            <div class="wf-lb-avatar" style="margin:0 auto 8px; width:48px; height:48px; border-color:#fbbf24;"></div>
+            <div style="font-size:0.92rem; font-weight:700;">Mike T.</div>
+            <div style="font-family:'DM Mono',monospace; font-size:0.85rem; color:var(--accent);">531 check-ins</div>
+          </div>
+          <div class="wf-stat-card" style="border-color:#d97706;">
+            <div style="font-size:0.72rem; color:#d97706; margin-bottom:4px;">3RD</div>
+            <div class="wf-lb-avatar" style="margin:0 auto 8px; width:40px; height:40px;"></div>
+            <div style="font-size:0.85rem; font-weight:600;">Alex W.</div>
+            <div style="font-family:'DM Mono',monospace; font-size:0.82rem; color:var(--accent);">389 check-ins</div>
+          </div>
+        </div>
+
+        <!-- Rest of top 10 -->
+        <div class="wf-card" style="padding:0; overflow:hidden;">
+          <div class="wf-lb-row">
+            <div class="wf-lb-rank">4</div>
+            <div class="wf-lb-avatar"></div>
+            <div class="wf-lb-name">Chris L.</div>
+            <div class="wf-lb-score">301</div>
+          </div>
+          <div class="wf-lb-row">
+            <div class="wf-lb-rank">5</div>
+            <div class="wf-lb-avatar"></div>
+            <div class="wf-lb-name">Emma R.</div>
+            <div class="wf-lb-score">287</div>
+          </div>
+          <div class="wf-lb-row">
+            <div class="wf-lb-rank">6</div>
+            <div class="wf-lb-avatar"></div>
+            <div class="wf-lb-name">David P.</div>
+            <div class="wf-lb-score">256</div>
+          </div>
+          <div class="wf-lb-row" style="border-bottom:none;">
+            <div class="wf-lb-rank">...</div>
+            <div class="wf-lb-avatar" style="opacity:0;"></div>
+            <div class="wf-lb-name" style="color:var(--text-muted); font-style:italic;"></div>
+            <div class="wf-lb-score"></div>
+          </div>
+        </div>
+
+        <!-- Your rank -->
+        <div class="wf-card" style="border-color:var(--accent); margin-top:16px;">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <div style="font-weight:700; font-size:1rem; width:28px; text-align:center; color:var(--accent);">14</div>
+            <div class="wf-lb-avatar" style="border-color:var(--accent);"></div>
+            <div style="flex:1;">
+              <div style="font-weight:600; font-size:0.9rem;">You (Jane D.)</div>
+              <div style="font-size:0.75rem; color:var(--text-muted);">7 check-ins away from #13</div>
+            </div>
+            <div style="font-family:'DM Mono',monospace; font-size:0.85rem; color:var(--accent);">142</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="annotations">
+      <h4>Design Notes</h4>
+      <ul>
+        <li>Top 3 get podium-style display; ranks 4–10 in a list; current user is shown at bottom in the opted-in state illustrated here</li>
+        <li>Backend: GET /api/v1/stats/leaderboard → Redis ZREVRANGE leaderboard:total_checkins 0 9 WITHSCORES</li>
+        <li>User's own rank: ZREVRANK leaderboard:total_checkins {userId}</li>
+        <li>"7 check-ins away from #13" — motivational nudge calculated from score difference with next rank</li>
+        <li>Leaderboard updates on every check-in via ZINCRBY (O(log N))</li>
+        <li>Privacy: only display name shown, no email; only users who have enabled "Show on leaderboard" appear here</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ==================== SETTINGS ==================== -->
+  <div class="screen-section" id="screen-settings">
+    <div class="screen-title">Settings Page</div>
+    <div class="screen-route">/settings</div>
+    <div class="screen-desc">User profile, timezone configuration, email reminder preferences, privacy controls, and account actions. Timezone selection is a core feature — it is the source of truth for all streak and date calculations.</div>
+
+    <div class="wireframe">
+      <div class="wf-topbar">
+        <div class="wf-dot"></div><div class="wf-dot"></div><div class="wf-dot"></div>
+        <div class="wf-url">app.streakup.dev/settings</div>
+      </div>
+      <div class="wf-body">
+        <div class="wf-nav">
+          <div class="wf-logo">Streak<span>Up</span></div>
+          <div class="wf-nav-links">
+            <span>Dashboard</span>
+            <span>Stats</span>
+            <span>Leaderboard</span>
+            <span class="active-link">Settings</span>
+            <span style="color:var(--text);">JD</span>
+          </div>
+        </div>
+
+        <div style="font-size:1.1rem; font-weight:700; margin-bottom:24px;">Settings</div>
+
+        <!-- Profile section -->
+        <div class="wf-card" style="padding:20px;">
+          <div style="font-weight:600; font-size:0.92rem; margin-bottom:16px;">Profile</div>
+
+          <div class="wf-label">Display Name</div>
+          <div class="wf-input" style="color:var(--text);">Jane Doe</div>
+
+          <div class="wf-label">Email</div>
+          <div class="wf-input" style="color:var(--text-muted); opacity:0.6;">jane@example.com</div>
+          <div style="font-size:0.7rem; color:var(--text-muted); margin-top:-8px; margin-bottom:16px;">Email cannot be changed</div>
+
+          <div class="wf-label">Timezone</div>
+          <div class="wf-input" style="color:var(--text); display:flex; justify-content:space-between; align-items:center;">
+            <span>Pacific/Auckland (UTC+12)</span>
+            <span style="font-size:0.72rem; color:var(--blue);">▼</span>
+          </div>
+          <div style="font-size:0.7rem; color:var(--orange); margin-top:-8px; margin-bottom:16px;">⚠ Changing timezone redefines future "today" calculations. Existing check-ins are not retroactively modified, so update this before checking in when you travel.</div>
+
+          <div style="display:flex; justify-content:flex-end;">
+            <div class="wf-btn wf-btn-primary" style="font-size:0.82rem;">Save Profile</div>
+          </div>
+        </div>
+
+        <!-- Notifications section -->
+        <div class="wf-card" style="padding:20px; margin-top:12px;">
+          <div style="font-weight:600; font-size:0.92rem; margin-bottom:16px;">Notifications</div>
+
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:16px;">
+            <div>
+              <div style="font-size:0.85rem; font-weight:500;">Daily email reminder</div>
+              <div style="font-size:0.75rem; color:var(--text-muted);">Get reminded if you haven't checked in by your preferred time</div>
+            </div>
+            <div style="width:44px; height:24px; border-radius:12px; background:var(--accent); position:relative; cursor:pointer;">
+              <div style="width:20px; height:20px; border-radius:50%; background:white; position:absolute; top:2px; right:2px;"></div>
+            </div>
+          </div>
+
+          <div class="wf-label">Reminder Time</div>
+          <div class="wf-input" style="color:var(--text); max-width:200px;">20:00 (8:00 PM)</div>
+          <div style="font-size:0.7rem; color:var(--text-muted); margin-top:-8px; margin-bottom:16px;">Based on your timezone: Pacific/Auckland</div>
+        </div>
+
+        <!-- Privacy section -->
+        <div class="wf-card" style="padding:20px; margin-top:12px;">
+          <div style="font-weight:600; font-size:0.92rem; margin-bottom:16px;">Privacy</div>
+
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+            <div>
+              <div style="font-size:0.85rem; font-weight:500;">Show on leaderboard</div>
+              <div style="font-size:0.75rem; color:var(--text-muted);">Display your name and check-in count on the public leaderboard</div>
+            </div>
+            <div style="width:44px; height:24px; border-radius:12px; background:var(--accent); position:relative; cursor:pointer;">
+              <div style="width:20px; height:20px; border-radius:50%; background:white; position:absolute; top:2px; right:2px;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Danger zone -->
+        <div class="wf-card" style="padding:20px; margin-top:12px; border-color:var(--red);">
+          <div style="font-weight:600; font-size:0.92rem; margin-bottom:8px; color:var(--red);">Danger Zone</div>
+          <div style="display:flex; align-items:center; justify-content:space-between;">
+            <div>
+              <div style="font-size:0.85rem; font-weight:500;">Delete Account</div>
+              <div style="font-size:0.75rem; color:var(--text-muted);">Permanently delete your account and all data</div>
+            </div>
+            <div class="wf-btn" style="background:transparent; color:var(--red); border:1px solid var(--red); font-size:0.78rem;">Delete Account</div>
+          </div>
+        </div>
+
+        <!-- Logout -->
+        <div style="margin-top:20px; text-align:center;">
+          <div class="wf-btn wf-btn-ghost" style="font-size:0.82rem;">Log Out</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="annotations">
+      <h4>Design Notes</h4>
+      <ul>
+        <li>Timezone dropdown: searchable list of IANA timezones; auto-detected on registration but changeable here</li>
+        <li>Timezone warning is always visible below the dropdown — not a modal, just inline context</li>
+        <li>Toggle switches update immediately (optimistic) via PATCH /api/v1/users/me/preferences</li>
+        <li>Profile save is a separate action (button) since name/timezone changes are more consequential</li>
+        <li>Delete Account: opens a confirmation modal requiring the user to type "DELETE" before proceeding (out of MVP scope — button present but shows "coming soon")</li>
+        <li>Reminder time: 24-hour dropdown in 30-minute increments; default 20:00 (8 PM local)</li>
+        <li>Leaderboard opt-out: when disabled, user's data is excluded from ZSET and not shown to others</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // Tab switching
+  const nav = document.getElementById('nav');
+  const buttons = nav.querySelectorAll('button');
+  const sections = document.querySelectorAll('.screen-section');
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.screen;
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      sections.forEach(s => {
+        s.classList.toggle('active', s.id === `screen-${target}`);
+      });
+    });
+  });
+
+  // Generate heatmap cells
+  function generateHeatmap(containerId, count) {
+    const el = document.getElementById(containerId);
+    if (!el) return;
+    const levels = ['', 'l1', 'l2', 'l3', 'l4'];
+    for (let i = 0; i < count; i++) {
+      const cell = document.createElement('div');
+      cell.className = 'wf-heatmap-cell';
+      const r = Math.random();
+      if (r > 0.55) {
+        cell.classList.add(levels[Math.floor(Math.random() * 4) + 1]);
+      }
+      el.appendChild(cell);
+    }
+  }
+
+  generateHeatmap('detail-heatmap', 91);   // ~3 months
+  generateHeatmap('full-heatmap', 112);     // ~16 weeks (compact preview)
+</script>
+</body>
+</html>
