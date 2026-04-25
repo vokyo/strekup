@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    hikari:
+      maximum-pool-size: ${DB_POOL_MAX_SIZE}
+
+logging:
+  level:
+    root: ${LOG_LEVEL_ROOT}
+    com.streakup: ${LOG_LEVEL_STREAKUP}
+  pattern:
+    console: "%d{HH:mm:ss.SSS} %-5level [%X{traceId:-}] %logger{36} - %msg%n"
+
+app:
+  cors:
+    allowed-origins: ${APP_FRONTEND_ORIGIN}
+  s3:
+    region: ${AWS_REGION}
+    bucket: ${AWS_S3_BUCKET}
+    endpoint-override: ${AWS_S3_ENDPOINT_OVERRIDE}
