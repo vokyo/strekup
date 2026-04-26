@@ -50,7 +50,9 @@ Every error — validation, auth, business, unhandled — returns this shape:
 | 401 | `UNAUTHENTICATED`, `TOKEN_EXPIRED`, `TOKEN_INVALID`, `TOKEN_REUSE_DETECTED` | Missing / bad / expired access token, or compromised refresh-token chain |
 | 403 | `FORBIDDEN` | Authenticated but missing a required role on a non-resource-scoped endpoint |
 | 404 | `NOT_FOUND` | Resource does not exist or belongs to someone else (masked as 404 to avoid ID enumeration) |
+| 405 | `METHOD_NOT_ALLOWED` | Route exists, but the HTTP method is not supported |
 | 409 | `CONFLICT`, `DUPLICATE_CHECK_IN`, `EMAIL_TAKEN`, `NOT_IN_SLUMP` | Unique constraint or business-rule collision |
+| 415 | `UNSUPPORTED_MEDIA_TYPE` | Request `Content-Type` is not supported |
 | 429 | `RATE_LIMITED` | LLM / presign endpoints under throttle |
 | 500 | `INTERNAL_ERROR` | Unhandled; `traceId` matches the request's MDC log |
 | 503 | `DEPENDENCY_UNAVAILABLE` | Source-of-truth dependency or non-degradable external service is unavailable |
@@ -619,4 +621,6 @@ Currently none. Write endpoints are naturally idempotent-ish via unique constrai
 | Resource belongs to caller but caller lacks role | `403 FORBIDDEN` | Same-user authorisation failure is informative and not a disclosure. |
 | Validation error | `400` with `details[]` | Clients can render field-level errors (`ApiErrorResponse.details`). |
 | Unknown JSON field | `400 BAD_REQUEST` | Jackson `FAIL_ON_UNKNOWN_PROPERTIES=true`. Protects against typos. |
+| Unsupported HTTP method | `405 METHOD_NOT_ALLOWED` | Keeps transport-level client bugs distinct from malformed input. |
+| Unsupported content type | `415 UNSUPPORTED_MEDIA_TYPE` | Helps clients fix `Content-Type` without treating the payload itself as invalid. |
 | Read after stale cache | Serve cached | Staleness window is 5 min on heatmap; acceptable per `requirements.md` NFRs. |

@@ -10,8 +10,6 @@ logging:
   level:
     root: ${LOG_LEVEL_ROOT}
     com.streakup: ${LOG_LEVEL_STREAKUP}
-  pattern:
-    console: "%d{HH:mm:ss.SSS} %-5level [%X{traceId:-}] %logger{36} - %msg%n"
 
 app:
   cors:

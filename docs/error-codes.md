@@ -61,6 +61,12 @@ Every error response — validation, auth, business, unhandled — returns this 
 |---|---|---|---|
 | `NOT_FOUND` | Resource doesn't exist, **or** it exists but belongs to another user (masked to prevent ID enumeration; see `api-spec.md` Appendix). Also returned when `attachmentIds` on `POST /check-ins` refer to rows the caller doesn't own or that are no longer attachable. | Any resource-scoped `🔒` endpoint | Navigate back to the list view; show "not found" toast. |
 
+### 405 — Method Not Allowed
+
+| `code` | When returned | Typical trigger endpoint(s) | Frontend handling |
+|---|---|---|---|
+| `METHOD_NOT_ALLOWED` | The route exists, but the HTTP method is not supported. | Any | Treat as a client integration bug; check the API client method mapping. |
+
 ### 409 — Conflict
 
 | `code` | When returned | Typical trigger endpoint(s) | Frontend handling |
@@ -69,6 +75,12 @@ Every error response — validation, auth, business, unhandled — returns this 
 | `DUPLICATE_CHECK_IN` | A check-in already exists for `(habit, checkInDate)`. | `POST /check-ins` | Tell the user they already checked in; re-fetch the habit card to show the existing state. |
 | `EMAIL_TAKEN` | Email address already registered. | `POST /auth/register` | Field-level error on the email input; offer "sign in instead". |
 | `NOT_IN_SLUMP` | Caller invoked `/ai/encouragement` for a habit that isn't in a ≥ 3-day miss streak. Prevents the endpoint being used as a general LLM proxy. | `POST /ai/encouragement` (P2) | Hide the encouragement CTA until the client detects a valid slump. |
+
+### 415 — Unsupported Media Type
+
+| `code` | When returned | Typical trigger endpoint(s) | Frontend handling |
+|---|---|---|---|
+| `UNSUPPORTED_MEDIA_TYPE` | The request `Content-Type` is not supported by the endpoint. | Any write endpoint | Treat as a client integration bug; send `application/json` unless the endpoint says otherwise. |
 
 ### 429 — Too Many Requests
 

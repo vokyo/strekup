@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<springProperty scope="context" name="ROOT_LOG_LEVEL" source="logging.level.root" defaultValue="INFO"/>
+	<springProperty scope="context" name="STREAKUP_LOG_LEVEL" source="logging.level.com.streakup" defaultValue="INFO"/>
+
+	<springProfile name="dev,default,test">
+		<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+			<encoder>
+				<pattern>%d{HH:mm:ss.SSS} %-5level [%X{traceId:-}] %logger{36} - %msg%n</pattern>
+			</encoder>
+		</appender>
+	</springProfile>
+
+	<springProfile name="prod">
+		<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+			<encoder class="org.springframework.boot.logging.logback.StructuredLogEncoder">
+				<format>${CONSOLE_LOG_STRUCTURED_FORMAT}</format>
+				<charset>${CONSOLE_LOG_CHARSET}</charset>
+			</encoder>
+		</appender>
+	</springProfile>
+
+	<root level="${ROOT_LOG_LEVEL}">
+		<appender-ref ref="CONSOLE"/>
+	</root>
+
+	<logger name="com.streakup" level="${STREAKUP_LOG_LEVEL}"/>
+</configuration>

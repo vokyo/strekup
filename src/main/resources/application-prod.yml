@@ -7,11 +7,12 @@ spring:
       maximum-pool-size: ${DB_POOL_MAX_SIZE}
 
 logging:
+  structured:
+    format:
+      console: logstash
   level:
     root: INFO
     com.streakup: INFO
-  pattern:
-    console: '{"ts":"%d{yyyy-MM-dd''T''HH:mm:ss.SSSXXX}","level":"%level","trace":"%X{traceId:-}","logger":"%logger","msg":"%message"}%n'
 
 app:
   cors:
